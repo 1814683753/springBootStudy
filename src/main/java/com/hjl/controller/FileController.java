@@ -34,7 +34,7 @@ public class FileController {
     @RequestMapping("/queryAll")
     @ResponseBody
     public List<Files> queryAll(){
-        myMailServices.sendEmail("jiale.huang@hand-china.com","测试","测试",new String[]{});
+        /// myMailServices.sendEmail("jiale.huang@hand-china.com","测试","测试",new String[]{});
         LOG.info("start query all...........");
         return fileManageService.queryAllFiles();
     }

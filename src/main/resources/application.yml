@@ -1,0 +1,32 @@
+# 服务端口
+server:
+  port: 10001
+
+# springboot 整合mybatis
+spring:
+  datasource:
+    # 高版本的mysql此处需要配置时区和设置是否用ssl加密
+    url: jdbc:mysql://localhost:3306/study?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password:
+    driver-class-name: com.mysql.jdbc.Driver
+  # 配置email
+  mail:
+    # #邮箱服务器的地址(以qq为例)
+    host: smtp.qq.com
+    # 用户名(自己的qq邮箱)
+    username: 1814683753@qq.com
+    # 密码(授权码)
+    password: smvfucszxdeofcej
+    # 默认编码
+    default-encoding: UTF-8
+    # 端口号
+    port: 587
+# 配置mybatis
+mybatis:
+  type-aliases-package: com.hjl.entity
+  mapper-locations: classpath:/com/hjl/mapper/*.xml
+
+# 邮件发送人
+from: 1814683753@qq.com
+

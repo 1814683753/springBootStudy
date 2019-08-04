@@ -9,6 +9,11 @@ import java.sql.Timestamp;
  * @Date 2019/8/3 16:33
  */
 public class Files implements Serializable {
+
+    /**
+     * 序列化id
+     */
+    private static final long serialVersionUID = -1120048017065711987L;
     /**
      * 文件编号
       */

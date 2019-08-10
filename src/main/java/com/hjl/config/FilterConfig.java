@@ -21,7 +21,7 @@ public class FilterConfig {
     public FilterRegistrationBean registerFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(new TestFilter());
-        //拦截路径，可以添加多个
+        // 拦截路径，可以添加多个
         registration.addUrlPatterns("/*");
         registration.setName("TestFilter");
         // spring boot 会按照order值的大小，从小到大的顺序来依次过滤。

@@ -31,7 +31,7 @@ public class FileController {
     /**
      * 取出所有数据
      */
-    @RequestMapping("/queryAll")
+    @RequestMapping("/api/queryAll")
     @ResponseBody
     public List<Files> queryAll(){
         /// myMailServices.sendEmail("jiale.huang@hand-china.com","测试","测试",new String[]{});

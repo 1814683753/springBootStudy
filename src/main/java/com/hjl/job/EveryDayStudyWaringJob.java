@@ -29,11 +29,13 @@ public class EveryDayStudyWaringJob {
 
     @Scheduled(cron = "0 0 9,14,20 * * *")
     public void study(){
-        mailServices.sendHtmlEmail("1814683753@qq.com","play","<p>开始学习......</P>",new String[]{});
+        LOG.info("定时任务正在执行......"+new Date());
+        mailServices.sendHtmlEmail("1814683753@qq.com","study","<p>开始学习......</P>",new String[]{});
     }
     @Scheduled(cron = "0 30 11,18,22 * * *")
     public void play(){
-        mailServices.sendHtmlEmail("1814683753@qq.com","study","<p>休息一下马上回来......</P>",new String[]{});
+        LOG.info("定时任务正在执行......"+new Date());
+        mailServices.sendHtmlEmail("1814683753@qq.com","play","<p>休息一下马上回来......</P>",new String[]{});
     }
 
 

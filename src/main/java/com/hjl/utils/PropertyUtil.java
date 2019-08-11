@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
  * @Description 读取配置文件的工具类
  * @Date 2019/8/11 18:21
  */
-public class PropertyUtil {
+public final class PropertyUtil {
 
     private static final Logger LOG = LoggerFactory.getLogger(PropertyUtil.class);
 

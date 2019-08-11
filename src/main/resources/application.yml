@@ -1,6 +1,6 @@
 # 服务端口
 server:
-  port: 10001
+  port: 10002
 
 # springboot 整合mybatis
 spring:
@@ -22,6 +22,13 @@ spring:
     default-encoding: UTF-8
     # 端口号
     port: 587
+  # redis配置
+  redis:
+    database: 0 #默认是0
+    host: 192.168.172.129
+    port: 6379
+    password: #未设置默认是空
+    
 # 配置mybatis
 mybatis:
   type-aliases-package: com.hjl.entity
@@ -29,4 +36,7 @@ mybatis:
 
 # 邮件发送人
 from: 1814683753@qq.com
+
+
+
 

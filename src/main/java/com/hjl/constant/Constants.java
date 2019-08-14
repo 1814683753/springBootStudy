@@ -18,4 +18,9 @@ public interface Constants {
     String DATE_CHANCE_TIMESTAMP_EXCEPTION = "时间戳转换日期异常：";
 
     String READ_PROPERTIES_EXCEPTION = "读取配置文件异常: ";
+
+    /**
+     * 服务器返回码配置
+     */
+    Integer CODE_400 = 400;
 }

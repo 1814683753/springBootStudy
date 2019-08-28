@@ -1,5 +1,7 @@
 package com.hjl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +19,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class SpringBootStudyApplication {
 
+    private static final Logger LOG = LogManager.getLogger("Embedded");
     public static void main(String[] args) {
+        LOG.info("start.......");
         SpringApplication.run(SpringBootStudyApplication.class, args);
     }
 

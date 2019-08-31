@@ -90,7 +90,7 @@
             <artifactId>log4j-flume-ng</artifactId>
             <version>2.9.0</version>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>org.apache.flume</groupId>
             <artifactId>flume-ng-embedded-agent</artifactId>
             <version>1.9.0</version>
@@ -113,15 +113,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.flume/flume-ng-sdk &ndash;&gt;
+        <!-- https://mvnrepository.com/artifact/org.apache.flume/flume-ng-sdk -->
         <dependency>
             <groupId>org.apache.flume</groupId>
             <artifactId>flume-ng-sdk</artifactId>
-            <version>1.9.0</version>
-        </dependency>-->
-        <dependency>
-            <groupId>org.apache.flume.flume-ng-clients</groupId>
-            <artifactId>flume-ng-log4jappender</artifactId>
             <version>1.9.0</version>
         </dependency>
     </dependencies>

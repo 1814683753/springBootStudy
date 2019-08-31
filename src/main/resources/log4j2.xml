@@ -1,25 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="error" name="MyApp" packages="">
     <Appenders>
-        <!--<Flume name="FlumeAppender" compress="false" type="Embedded">
-            <Property name="channel.type">memory</Property>
+        <Flume name="FlumeAppender" compress="false" type="Embedded">
             <Property name="channel.type">memory</Property>
             <Property name="channel.capacity">200</Property>
             <Property name="sinks">agent</Property>
             <Property name="agent.type">avro</Property>
-            <Property name="agent.hostname">172.16.0.226</Property>
+            <Property name="agent.hostname">192.168.172.129</Property>
             <Property name="agent.port">10802</Property>
             <Property name="agent.batch-size">100</Property>
             <Property name="processor.type">failover</Property>
             <PatternLayout charset="UTF-8" pattern="%d{yyyy-MM-dd HH:mm:ss SSS}  %m%n" />
-        </Flume>-->
-        <!--输出到flume-->
-        <!--<Flume name="FlumeInfo" compress="false" type="avro" ignoreExceptions="false">
-            <Agent host="172.16.0.226" port="10802"/>
-            &lt;!&ndash;输出方式为json&ndash;&gt;
-            &lt;!&ndash;<JSONLayout/>&ndash;&gt;
-            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
-        </Flume>-->
+        </Flume>
         <!-- 输出到控制台 -->
         <Console name="Console" target="SYSTEM_OUT">
             <!-- 需要记录的级别 -->
@@ -53,11 +45,12 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-       <!-- <Logger name="sysLog" level="trace">
-            <AppenderRef ref="FlumeAppender"/>
-        </Logger>-->
+        <Logger name="sysLog" level="trace">
+            <AppenderRef ref="FlumeAppender" level="info" />
+        </Logger>
         <Root level="trace">
             <!--<appender-ref ref="FlumeInfo"/>-->
+            <!--<AppenderRef ref="FlumeAppender" />-->
             <AppenderRef ref="Console" />
             <AppenderRef ref="RollingFile"/>
             <AppenderRef ref="RollingErrorFile"/>

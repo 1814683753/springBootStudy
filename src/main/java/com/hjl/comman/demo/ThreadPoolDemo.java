@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -36,11 +37,26 @@ public class ThreadPoolDemo {
         threadPoolExecutor.execute(new TestRunnable("c"));
         threadPoolExecutor.execute(new TestRunnable("d"));
         try{
+            int count = Thread.activeCount();
+            LOG.info("当前线程组中活跃的线程数：{}",count);
+            Thread[] ts = new Thread[count];
+            // 将当前线程的线程组及其子组中的每一个活动线程复制到指定的数组中
+            Thread.enumerate(ts);
+            for (Thread t:ts) {
+                if(Objects.nonNull(t)){
+                    LOG.info("线程id={},线程名={}",t.getId(),t.getName());
+                    if("a".equals(t.getName())){
+                        // 中断指定线程
+                        t.interrupt();
+                    }
+                }
+
+            }
             // 等待线程池中所有任务执行完成关闭，但是不会等待待提交的任务完成
             ///threadPoolExecutor.shutdown();
             // 立即终止所有任务并且返回任务列表
-            List<Runnable> list = threadPoolExecutor.shutdownNow();
-            list.forEach(runnable -> LOG.info("class : {}",runnable.getClass()));
+           /* List<Runnable> list = threadPoolExecutor.shutdownNow();
+            list.forEach(runnable -> LOG.info("class : {}",runnable.getClass()));*/
             // 关闭所有线程
             ///threadPoolExecutor.awaitTermination(6,TimeUnit.SECONDS);
         }catch (Exception e){
@@ -74,13 +90,15 @@ public class ThreadPoolDemo {
          */
         @Override
         public void run() {
-            while(true){
-                LOG.info("线程执行中.....当前线程：{},线程名：{}",Thread.currentThread().getName(),this.name);
+            // 使用while(true)时，强制停止线程时停不掉
+            while(!Thread.interrupted()){
+                Thread.currentThread().setName(this.name);
+                LOG.info("线程执行中.....当前线程id：{},线程名：{}",Thread.currentThread().getId(),this.name);
                 try {
                     TimeUnit.SECONDS.sleep(2);
                 }catch (InterruptedException e) {
-                    boolean flag = Thread.interrupted();
-                    LOG.info("是否中断成功: {}",flag);
+                    // 终结循环,不加这个强制停掉线程会失败
+                    Thread.currentThread().interrupt();
                     LOG.error(Constants.THREAD_POOL_EXECUTOR_EXCEPTION, e);
                 }
 

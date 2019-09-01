@@ -43,7 +43,8 @@
 
         <Root level="trace">
             <!--<appender-ref ref="FlumeInfo"/>-->
-            <AppenderRef ref="eventLogger" level="all" />
+            <!-- 输出日志到flume -->
+            <!--<AppenderRef ref="eventLogger" level="all" />-->
             <AppenderRef ref="Console" />
             <AppenderRef ref="RollingFile"/>
             <AppenderRef ref="RollingErrorFile"/>

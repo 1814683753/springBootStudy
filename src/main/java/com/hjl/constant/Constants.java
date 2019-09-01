@@ -19,6 +19,8 @@ public interface Constants {
 
     String READ_PROPERTIES_EXCEPTION = "读取配置文件异常: ";
 
+    String THREAD_POOL_EXECUTOR_EXCEPTION = "线程池执行异常：";
+
     /**
      * 服务器返回码配置
      */

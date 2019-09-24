@@ -18,6 +18,7 @@ public class ChildChannelHandler extends ChannelInitializer<SocketChannel> {
 
     @Override
     protected void initChannel(SocketChannel socketChannel) throws Exception {
-        socketChannel.pipeline().addLast(new ServerHandler());
+        ///socketChannel.pipeline().addLast(new ServerHandler());
+        socketChannel.pipeline().addLast(new HttpServerHandler());
     }
 }

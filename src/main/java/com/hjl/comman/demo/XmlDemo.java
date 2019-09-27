@@ -1,5 +1,7 @@
 package com.hjl.comman.demo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.*;
 import org.xml.sax.InputSource;
 
@@ -15,35 +17,48 @@ import java.io.StringReader;
 
 /**
  * @author ：hjl
- * @date ：2019/9/27 10:51
- * @description： xml文件解析和生成demo
+ * @date ：2019/9/27 15:24
+ * @description： xml文件操作demo
  * @modified By：
  */
 public class XmlDemo {
-    public static void main(String[] args) throws Exception {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        StringReader stringReader = new StringReader("<root>\n" +
-                "\t<first name=\"test\">\n" +
-                "\t</first>\n" +
-                "</root>");
-        // 解析文件
-        Document document = builder.parse(new InputSource(stringReader));
-        // 获取文件的根节点
-        Element element = document.getDocumentElement();
-        String tag = element.getTagName();
-        System.out.println("tag = " + tag);
-        // 根据名字获取子节点集合
-        NodeList nodeList = element.getElementsByTagName("first");
-        System.out.println("size ==" + nodeList.getLength());
-        for (int i=0; i<nodeList.getLength();i++){
-            // 获取指定子节点
-            Node node = nodeList.item(i);
-            // 获取节点中所有属性
-            NamedNodeMap namedNodeMap =  node.getAttributes();
-            // 获取指定属性值
-            String content = namedNodeMap.getNamedItem("name").getTextContent();
-            System.out.println("content = " + content);
+
+    private static final Logger LOG = LoggerFactory.getLogger(XmlDemo.class);
+    public static void main(String[] args){
+        readXml();
+    }
+
+    /**
+     * 解析xml
+     */
+    public static void readXml(){
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            StringReader stringReader = new StringReader("<root>\n" +
+                    "\t<first t=\"test\">\n" +
+                    "\t</first>\n" +
+                    "</root>");
+            // 解析文件
+            Document document = builder.parse(new InputSource(stringReader));
+            // 获取文件的根节点
+            Element element = document.getDocumentElement();
+            String tag = element.getTagName();
+            LOG.info("tag = {}" , tag);
+            // 根据名字获取子节点集合
+            NodeList nodeList = element.getElementsByTagName("first");
+            LOG.info("size ={}" , nodeList.getLength());
+            for (int i=0; i<nodeList.getLength();i++){
+                // 获取指定子节点
+                Node node = nodeList.item(i);
+                // 获取节点中所有属性
+                NamedNodeMap namedNodeMap =  node.getAttributes();
+                // 获取指定属性值
+                String content = namedNodeMap.getNamedItem("t").getTextContent();
+                LOG.info("content = {}" , content);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 

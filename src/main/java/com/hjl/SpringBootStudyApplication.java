@@ -21,7 +21,6 @@ public class SpringBootStudyApplication {
 
     private static final Logger LOG = LogManager.getLogger("Embedded");
     public static void main(String[] args) {
-        LOG.info("start.......");
         SpringApplication.run(SpringBootStudyApplication.class, args);
     }
 

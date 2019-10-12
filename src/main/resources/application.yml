@@ -6,7 +6,7 @@ server:
 spring:
   datasource:
     # 高版本的mysql此处需要配置时区和设置是否用ssl加密
-    url: jdbc:mysql://localhost:3306/study?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
     password:
     driver-class-name: com.mysql.jdbc.Driver
@@ -28,7 +28,8 @@ spring:
     host: 192.168.172.129
     port: 6379
     password: #未设置默认是空
-    
+  cache:
+    type: redis
 # 配置mybatis
 mybatis:
   type-aliases-package: com.hjl.entity

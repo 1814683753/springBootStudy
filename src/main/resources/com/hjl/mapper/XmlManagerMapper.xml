@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hjl.dao.XmlManageDao">
+
+    <resultMap type="SecDef" id="xmlMap">
+        <id column="id" property="id"/>
+        <result column="Descs" property="desc"/>
+        <result column="SecurityTypeID" property="securityTypeId"/>
+        <result column="TermToMaturityString" property="termToMaturityString"/>
+        <result column="CentraQuoteBondIndic" property="centraQuoteBondIndic"/>
+        <result column="Instrmt_id" property="instrmtId"/>
+        <result column="Instrmt_sym" property="instrmtSym"/>
+        <result column="Pty_NoPartyIDs" property="ptyNoPartyIds"/>
+        <result column="Pty_ID" property="ptyId"/>
+        <result column="Pty_R" property="ptyR"/>
+    </resultMap>
+    <select id="queryAllFile"  resultMap="xmlMap">
+        SELECT
+            id,
+            Descs,
+            SecurityTypeID,
+            TermToMaturityString,
+            CentraQuoteBondIndic,
+            Instrmt_id,
+            Instrmt_sym,
+            Pty_NoPartyIDs,
+            Pty_ID,
+            Pty_R
+        FROM
+            SecDef
+    </select>
+</mapper>

@@ -32,7 +32,7 @@ public class EveryDayStudyWaringJob {
      */
     private String[] ccs ;
 
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 0 * * * *")
     public void test(){
         try{
             LOG.info("定时任务正在执行......现在时间是： {}",new Date());

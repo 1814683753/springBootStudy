@@ -15,9 +15,9 @@ spring:
     # #邮箱服务器的地址(以qq为例)
     host: smtp.qq.com
     # 用户名(自己的qq邮箱)
-    username: 1814683753@qq.com
+    username: 1957789968@qq.com
     # 密码(授权码)
-    password: smvfucszxdeofcej
+    password: safxibzpspshdfab
     # 默认编码
     default-encoding: UTF-8
     # 端口号
@@ -25,18 +25,17 @@ spring:
   # redis配置
   redis:
     database: 0 #默认是0
-    host: 192.168.172.129
+    host: 192.168.192.129
     port: 6379
-    password: #未设置默认是空
+    password: myredis #未设置默认是空
   cache:
     type: redis
 # 配置mybatis
 mybatis:
   type-aliases-package: com.hjl.entity
   mapper-locations: classpath:/com/hjl/mapper/*.xml
-
 # 邮件发送人
-from: 1814683753@qq.com
+from: 1957789968@qq.com
 # 邮件接收人
 to : 1814683753@qq.com
 # 邮件抄送人

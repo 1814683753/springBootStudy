@@ -14,7 +14,7 @@
         <result column="Pty_ID" property="ptyId"/>
         <result column="Pty_R" property="ptyR"/>
     </resultMap>
-    <select id="queryAllFile"  resultMap="xmlMap">
+    <select id="queryAll"  resultMap="xmlMap">
         SELECT
             id,
             Descs,

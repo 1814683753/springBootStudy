@@ -36,7 +36,7 @@ public class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
             return new byte[0];
         }
         logger.info("t=={}",t);
-        return JSON.toJSONString(t, SerializerFeature.WriteClassName).getBytes(DEFAULT_CHARSET);
+        return JSON.toJSONString(t, SerializerFeature.WriteNullStringAsEmpty).getBytes(DEFAULT_CHARSET);
     }
 
     @Override

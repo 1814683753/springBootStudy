@@ -2,6 +2,7 @@ package com.hjl.service;
 
 import com.hjl.entity.Files;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -16,4 +17,10 @@ public interface FileManageService {
      * @return
      */
     List<Files> queryAllFiles();
+    /**
+     * 下载文件
+     * @param fileName
+     * @param response
+     */
+    void download(HttpServletResponse response, String fileName);
 }

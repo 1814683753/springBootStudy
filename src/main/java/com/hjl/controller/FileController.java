@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -37,6 +38,17 @@ public class FileController {
         /// myMailServices.sendEmail("jiale.huang@hand-china.com","测试","测试",new String[]{});
         LOG.info("start query all...........");
         return fileManageService.queryAllFiles();
+    }
+
+    /**
+     * 根据文件名下载单个文件
+     * @param response
+     * @param fileName
+     */
+    @ResponseBody
+    @RequestMapping("/api/downloadFileByName")
+    public void downloadFileByName(HttpServletResponse response, String fileName){
+        fileManageService.download(response,fileName);
     }
 
 }

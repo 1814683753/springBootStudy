@@ -4,6 +4,7 @@ import com.hjl.constant.Constants;
 import com.hjl.dao.FileManagerDao;
 import com.hjl.entity.Files;
 import com.hjl.service.FileManageService;
+import com.hjl.utils.CompressUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,8 +131,76 @@ public class FileManageServiceImpl implements FileManageService {
     }
 
     /**
+     * 下载文件
+     *
+     * @param response
+     * @param dirName  文件夹名
+     */
+    @Override
+    public void downloadDir(HttpServletResponse response, String dirName) {
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
+        OutputStream os = null;
+        try {
+            File dir = new File(path);
+            List<File> targetFiles = new ArrayList<>();
+            getDirByName(dir.listFiles(),dirName,targetFiles);
+            if (!CollectionUtils.isEmpty(targetFiles)){
+                // 只取第一个
+                File targetDir = targetFiles.get(0);
+                // 压缩文件
+                boolean isSuccess = CompressUtils.dirToZip(targetDir.getAbsolutePath());
+                if (isSuccess){
+                    File downloadFile = new File(targetDir.getParent()+File.separator+targetDir.getName()+"zip");
+                    // 配置文件下载
+                    response.setHeader("content-type", "application/octet-stream");
+                    response.setContentType("application/octet-stream");
+                    // 下载文件能正常显示中文
+                    response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(downloadFile.getName(), "UTF-8"));
+                    // 实现文件下载
+                    byte[] buffer = new byte[1024];
+                    fis = new FileInputStream(downloadFile);
+                    bis = new BufferedInputStream(fis);
+                    os = response.getOutputStream();
+                    int len = -1 ;
+                    while ((len=bis.read(buffer)) != -1) {
+                        os.write(buffer, 0, len);
+                    }
+                    LOG.info("Download the song successfully!");
+                }
+            }else {
+                LOG.info("当前路径{}下不存在{}目录",dir,targetFiles);
+            }
+        }catch (Exception e){
+            LOG.error("download dir happen a error : ",e);
+        }finally {
+            if (os !=null){
+                try {
+                    os.close();
+                }catch (Exception e){
+                    LOG.error("close failed : ",e);
+                }
+            }
+            if (bis != null) {
+                try {
+                    bis.close();
+                } catch (Exception e) {
+                    LOG.error("close failed : ",e);
+                }
+            }
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (Exception e) {
+                    LOG.error("close failed : ",e);
+                }
+            }
+        }
+    }
+
+    /**
      * 遍历文件目录获取指定文件
-     * @param files 要遍历的文件
+     * @param files 要遍历的文件目录
      * @param name 要查询的文件名
      * @param targetFiles 存放查找到的目标文件
      * @return 若没找到则返回null
@@ -139,6 +208,26 @@ public class FileManageServiceImpl implements FileManageService {
     private static void getFileByName(File[] files, String name, List<File> targetFiles){
         for (File file: files) {
             if (file.isDirectory()){
+                getFileByName(file.listFiles(),name,targetFiles);
+            }else {
+                String fileName = file.getName();
+                if (fileName.endsWith(name)){
+                    LOG.info("path:{},name:{}",file.getAbsolutePath(),fileName);
+                    targetFiles.add(file);
+                }
+            }
+        }
+    }
+
+    /**
+     * 遍历文件目录获取指定文件目录
+     * @param files 要遍历的文件目录
+     * @param name 要查询的文件目录
+     * @param targetFiles 存放查找到的目标目录
+     */
+    private static void getDirByName(File[] files, String name, List<File> targetFiles){
+        for (File file: files) {
+            if (file.isFile()){
                 getFileByName(file.listFiles(),name,targetFiles);
             }else {
                 String fileName = file.getName();

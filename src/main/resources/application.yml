@@ -40,4 +40,5 @@ from: 1957789968@qq.com
 to : 1814683753@qq.com
 # 邮件抄送人
 cc :
-
+## 要下载的文件路径
+dirPath: D:\\document\\work\\document

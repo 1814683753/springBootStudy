@@ -19,8 +19,15 @@ public interface FileManageService {
     List<Files> queryAllFiles();
     /**
      * 下载文件
-     * @param fileName
+     * @param fileName 文件名
      * @param response
      */
     void download(HttpServletResponse response, String fileName);
+
+    /**
+     * 下载文件
+     * @param dirName 文件夹名
+     * @param response
+     */
+    void downloadDir(HttpServletResponse response, String dirName);
 }

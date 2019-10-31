@@ -68,6 +68,10 @@ public class FileManageServiceImpl implements FileManageService {
      */
     @Override
     public void download(HttpServletResponse response, String fileName) {
+        if (StringUtils.isEmpty(fileName)){
+            LOG.info("传入的文件名不能为空");
+            return;
+        }
         FileInputStream fis = null;
         BufferedInputStream bis = null;
         OutputStream os = null;
@@ -138,6 +142,10 @@ public class FileManageServiceImpl implements FileManageService {
      */
     @Override
     public void downloadDir(HttpServletResponse response, String dirName) {
+        if (StringUtils.isEmpty(dirName)){
+            LOG.info("传入的文件目录不能为空......");
+            return;
+        }
         FileInputStream fis = null;
         BufferedInputStream bis = null;
         OutputStream os = null;
@@ -151,7 +159,7 @@ public class FileManageServiceImpl implements FileManageService {
                 // 压缩文件
                 boolean isSuccess = CompressUtils.dirToZip(targetDir.getAbsolutePath());
                 if (isSuccess){
-                    File downloadFile = new File(targetDir.getParent()+File.separator+targetDir.getName()+"zip");
+                    File downloadFile = new File(targetDir.getParent()+File.separator+targetDir.getName()+".zip");
                     // 配置文件下载
                     response.setHeader("content-type", "application/octet-stream");
                     response.setContentType("application/octet-stream");
@@ -228,12 +236,14 @@ public class FileManageServiceImpl implements FileManageService {
     private static void getDirByName(File[] files, String name, List<File> targetFiles){
         for (File file: files) {
             if (file.isFile()){
-                getFileByName(file.listFiles(),name,targetFiles);
+                continue;
             }else {
                 String fileName = file.getName();
                 if (fileName.endsWith(name)){
                     LOG.info("path:{},name:{}",file.getAbsolutePath(),fileName);
                     targetFiles.add(file);
+                }else {
+                    getDirByName(file.listFiles(),name,targetFiles);
                 }
             }
         }

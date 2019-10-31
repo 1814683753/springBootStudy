@@ -55,9 +55,9 @@ public class FileController {
 
     @ResponseBody
     @RequestMapping("/api/downloadDirByName")
-    public void downloadDirByName(HttpServletResponse response, String DirName){
-        LOG.info("文件目录{}即将被下载......",DirName);
-        fileManageService.download(response,DirName);
-        LOG.info("文件目录下载完成......",DirName);
+    public void downloadDirByName(HttpServletResponse response, String dirName){
+        LOG.info("文件目录{}即将被下载......",dirName);
+        fileManageService.downloadDir(response,dirName);
+        LOG.info("文件目录下载完成......",dirName);
     }
 }

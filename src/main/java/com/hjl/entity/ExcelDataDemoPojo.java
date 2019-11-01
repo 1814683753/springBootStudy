@@ -1,5 +1,6 @@
 package com.hjl.entity;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,7 +13,10 @@ import java.util.Date;
  */
 @Data
 public class ExcelDataDemoPojo {
+    @ExcelProperty("姓名")
     private String string;
+    @ExcelProperty("日期")
     private Date date;
+    @ExcelProperty("工资")
     private Double doubleData;
 }

@@ -34,11 +34,8 @@ public class ExcelDemoDataListener<T> extends AnalysisEventListener<T> {
 
     @Override
     public void invoke(T t, AnalysisContext analysisContext) {
-        System.out.println("aaaaaaaaa");
         LOG.info("解析到一条数据.....{}", JSON.toJSONString(t));
-
         dataList.add(t);
-
     }
 
     @Override

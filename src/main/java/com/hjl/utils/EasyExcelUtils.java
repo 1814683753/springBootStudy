@@ -1,9 +1,6 @@
 package com.hjl.utils;
 
 import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.ExcelReader;
-import com.alibaba.excel.read.builder.ExcelReaderBuilder;
-import com.hjl.entity.ExcelDataDemoPojo;
 import com.hjl.listener.ExcelDemoDataListener;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -23,6 +20,13 @@ public final class EasyExcelUtils {
 
     public static final Logger LOG = LoggerFactory.getLogger(EasyExcelUtils.class);
 
+    /**
+     * 读取excel并将数据存放到指定类型对象集合中
+     * @param tClass 要存放数据的对象
+     * @param path excel的路径
+     * @param <T> 泛型，存放数据对象
+     * @return 返回数据集合
+     */
     public static <T>List<T> readExcel(Class<T> tClass,String path){
         List<T> dataList = new ArrayList<>();
         if (StringUtils.isEmpty(path)){
@@ -34,8 +38,28 @@ public final class EasyExcelUtils {
         return dataList;
     }
 
-    public static void main(String[] args) {
-        List<ExcelDataDemoPojo> list = EasyExcelUtils.readExcel(ExcelDataDemoPojo.class,"C:\\Users\\18146\\Desktop\\test.xlsx");
-        list.forEach(demo -> System.out.println(demo));
+    /**
+     * 将指定对象集合中的数据写入到excel中
+     * @param tClass 要被解析的对象
+     * @param path 文件存放路径
+     * @param dataList 要存放的数据
+     * @param sheetName sheet 标签名字
+     * @param <T> 泛型
+     * @return 是否写入成功
+     */
+    public static <T>boolean writeExcel(Class<T> tClass,String path,List<T> dataList,String sheetName){
+        if (StringUtils.isEmpty(path) || StringUtils.isEmpty(sheetName)){
+            LOG.info("路径或者sheetName为空");
+            return Boolean.FALSE;
+        }
+        try {
+            File file = new File(path);
+            EasyExcel.write(file, tClass).sheet(sheetName).doWrite(dataList);
+            return Boolean.TRUE;
+        }catch (Exception e){
+            LOG.error("write excel error : ",e);
+        }
+        return Boolean.FALSE;
     }
+
 }

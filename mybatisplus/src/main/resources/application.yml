@@ -9,3 +9,6 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
 server:
   port: 10003
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

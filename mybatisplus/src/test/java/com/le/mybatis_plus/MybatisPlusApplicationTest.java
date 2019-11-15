@@ -3,6 +3,8 @@ package com.le.mybatis_plus;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.le.mybatis_plus.entity.User;
 import com.le.mybatis_plus.mapper.UserMapper;
 import org.junit.Assert;
@@ -195,6 +197,22 @@ class MybatisPlusApplicationTest {
         user = userMapper.selectById(1);
         LOG.info("updateById after user : {}",user);
     }
+    @Test
+    void testPagination(){
+        Page<User> page = new Page<>();
+        // 设置当前是哪一页，页数从1开始,传入小于1的数据都会当作1处理
+        page.setCurrent(-1);
+        // 设置每页的数据大小
+        page.setSize(2);
+        IPage<User> userIPage = userMapper.selectPage(page,null);
+        // 获取数据库中总记录数
+        LOG.info("total : {}",userIPage.getTotal());
+        // 打印当前页中所有记录
+        userIPage.getRecords().forEach(user -> {
+            LOG.info("user : {}",user);
+        });
+    }
+
 
 
 }

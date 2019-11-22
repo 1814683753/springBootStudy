@@ -35,7 +35,7 @@ public class EasyExcelTest {
     }
     @Test
     public void testRead(){
-        List<ExcelDataDemoPojo> list = EasyExcelUtils.readExcel(ExcelDataDemoPojo.class,"D:\\test\\test.xlsx");
+        List<ExcelDataDemoPojo> list = EasyExcelUtils.readExcel(ExcelDataDemoPojo.class,"D:\\test\\test.xlsx",null);
         list.forEach(excelDataDemoPojo -> {
             System.out.println(excelDataDemoPojo);
         });

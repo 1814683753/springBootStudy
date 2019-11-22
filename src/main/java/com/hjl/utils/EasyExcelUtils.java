@@ -25,16 +25,22 @@ public final class EasyExcelUtils {
      * @param tClass 要存放数据的对象
      * @param path excel的路径
      * @param <T> 泛型，存放数据对象
+     * @param sheetName 要读取的sheet页名称 为空默认读取第一个sheet
      * @return 返回数据集合
      */
-    public static <T>List<T> readExcel(Class<T> tClass,String path){
+    public static <T>List<T> readExcel(Class<T> tClass,String path,String sheetName){
         List<T> dataList = new ArrayList<>();
         if (StringUtils.isEmpty(path)){
             return null;
         }
         File file = new File(path);
         LOG.info("start.....{}",file.getAbsolutePath());
-        EasyExcel.read(file,tClass,new ExcelDemoDataListener<T>(dataList)).sheet().doRead();
+        if (StringUtils.isEmpty(sheetName)){
+            EasyExcel.read(file,tClass,new ExcelDemoDataListener<T>(dataList)).sheet().doRead();
+        }else {
+            EasyExcel.read(file,tClass,new ExcelDemoDataListener<T>(dataList)).sheet(sheetName).doRead();
+        }
+
         return dataList;
     }
 

@@ -3,13 +3,9 @@ package com.hjl.comman.demo;
 import com.hjl.constant.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @Author hjl
@@ -73,9 +69,21 @@ public class ThreadPoolDemo {
      * @param workQueue 线程池中的任务队列.常用的有三种队列，SynchronousQueue,LinkedBlockingDeque,ArrayBlockingQueue
      * @return 线程池
      */
-    public static ThreadPoolExecutor getThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue){
-        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(corePoolSize,maximumPoolSize,keepAliveTime, unit,workQueue);
-        return threadPoolExecutor;
+    private static ThreadPoolExecutor getThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue){
+        return new ThreadPoolExecutor(corePoolSize,maximumPoolSize,keepAliveTime, unit,workQueue,getThreadFactory());
+    }
+
+    /**
+     * 创建线程工厂,对线程池中的线程进行一系列处理
+     * @return
+     */
+    private static ThreadFactory getThreadFactory(){
+        AtomicInteger tag = new AtomicInteger(1);
+        return (Runnable r) ->{
+            Thread thread = new Thread(r);
+            thread.setName("线程-demo-" + tag.getAndIncrement());
+            return thread;
+        };
     }
 
     static class TestRunnable implements Runnable{
@@ -92,8 +100,9 @@ public class ThreadPoolDemo {
         public void run() {
             // 使用while(true)时，强制停止线程时停不掉
             while(!Thread.interrupted()){
-                Thread.currentThread().setName(this.name);
-                LOG.info("线程执行中.....当前线程id：{},线程名：{}",Thread.currentThread().getId(),this.name);
+                // 此处设置线程名后会让线程工厂设置的线程名失效
+                //Thread.currentThread().setName(this.name);
+                LOG.info("线程执行中.....当前线程id：{},线程名：{}",Thread.currentThread().getId(),Thread.currentThread().getName());
                 try {
                     TimeUnit.SECONDS.sleep(2);
                 }catch (InterruptedException e) {

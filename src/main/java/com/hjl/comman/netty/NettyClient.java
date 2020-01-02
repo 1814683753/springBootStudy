@@ -1,13 +1,14 @@
 package com.hjl.comman.netty;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 
 /**
  * @Author hjl
@@ -40,7 +41,13 @@ public class NettyClient {
                         .handler(new ChannelInitializer<SocketChannel>() {
                             @Override
                             public void initChannel(SocketChannel ch) throws Exception {
-                                ch.pipeline().addLast(new ClientHandler());
+                                //ch.pipeline().addLast(new ClientHandler());
+                                ChannelPipeline pipeline = ch.pipeline();
+                                pipeline.addLast("protobufVarint32FrameDecoder", new ProtobufVarint32FrameDecoder());
+                                pipeline.addLast("protobufDecoder", new ProtobufDecoder(StudentInfo.Student.getDefaultInstance()));
+                                pipeline.addLast("protobufVarint32LengthFieldPrepender", new ProtobufVarint32LengthFieldPrepender());
+                                pipeline.addLast("protobufEncoder", new ProtobufEncoder());
+                                pipeline.addLast("testClientHandler", new TestClientHandler());
                             }
                         });
 

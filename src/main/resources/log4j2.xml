@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="error" name="MyApp" packages="">
     <Appenders>
-        <Flume name="eventLogger" compress="false">
+        <!-- <Flume name="eventLogger" compress="false">
             <Agent host="192.168.172.129" port="10802"/>
             <!--输出方式为json-->
             <!--<JSONLayout/>-->
-            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
-        </Flume>
+        <!--<PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
+        </Flume> -->
         <!-- 输出到控制台 -->
         <Console name="Console" target="SYSTEM_OUT">
             <!-- 需要记录的级别 -->

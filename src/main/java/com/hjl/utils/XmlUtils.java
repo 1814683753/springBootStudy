@@ -1,14 +1,11 @@
 package com.hjl.utils;
 
-import com.alibaba.fastjson.JSONObject;
-import com.google.gson.JsonObject;
 import com.hjl.constant.Constants;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 import org.w3c.dom.*;
-import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,6 +14,7 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Map;
 import java.util.Objects;
@@ -240,5 +238,29 @@ public class XmlUtils {
             LOG.error("获取对应标签的内容失败：",e);
         }
         return null;
+    }
+    /**
+     * 根据xml标签转换成xml字符串
+     * @param element 根标签
+     * @return xml字符串
+     */
+    public static String toXmlString(Element element){
+        try {
+            // 获取文档
+            Document document = element.getOwnerDocument();
+            // 作为文档对象模型（DOM）树形式的变换源树的持有者。
+            DOMSource source = new DOMSource(document);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            StreamResult streamResult = new StreamResult(outputStream);
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty("encoding", "UTF-8");
+            transformer.setOutputProperty("indent", "yes");
+            transformer.transform(source, streamResult);
+            return outputStream.toString("UTF-8");
+        }catch (Exception e){
+            LOG.error("create xml tag happened a error : ",e);
+        }
+        return "";
     }
 }

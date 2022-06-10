@@ -3,7 +3,7 @@
     <Appenders>
         <!-- <Flume name="eventLogger" compress="false">
             <Agent host="192.168.172.129" port="10802"/>
-            <!--输出方式为json-->
+            -输出方式为json-->
             <!--<JSONLayout/>-->
         <!--<PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
         </Flume> -->
